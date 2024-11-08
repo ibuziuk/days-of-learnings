@@ -1,0 +1,19 @@
+schemaVersion: 2.3.0
+metadata:
+  generateName: quarkus-api-example
+attributes:
+  controller.devfile.io/scc: container-build
+  controller.devfile.io/storage-type: ephemeral
+components:
+- name: devtools
+  container:
+    image: quay.io/devfile/universal-developer-image:ubi8-latest
+    memoryLimit: 12G
+    memoryRequest: 256Mi
+    cpuLimit: '2'
+    cpuRequest: 30m
+    mountSources: true
+    sourceMapping: /projects
+    env:
+      - name: KUBEDOCK_ENABLED
+        value: 'true'
