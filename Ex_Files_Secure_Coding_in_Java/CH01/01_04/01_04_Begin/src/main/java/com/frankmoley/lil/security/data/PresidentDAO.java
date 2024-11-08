@@ -1,9 +1,6 @@
 package com.frankmoley.lil.security.data;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,13 +8,13 @@ import com.frankmoley.lil.security.util.DatabaseUtil;
 
 public class PresidentDAO {
 
-    public List<President> getByLastName(String lastName){
+    public List<President> getByLastName(final String lastName){
         Connection connection = DatabaseUtil.getConnection();
-        String sql = String.format("select PRESIDENT_ID, FIRST_NAME, MIDDLE_INITIAL, LAST_NAME, EMAIL_ADDRESS from PRESIDENT where LAST_NAME = '%s'", lastName);
         List<President> resultList= new ArrayList<>();
         try {
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(sql);
+            PreparedStatement statement = connection.prepareStatement("select PRESIDENT_ID, FIRST_NAME, MIDDLE_INITIAL, LAST_NAME, EMAIL_ADDRESS from PRESIDENT where LAST_NAME = ?");
+            statement.setString(1, lastName);
+            ResultSet resultSet = statement.executeQuery();
             while(resultSet.next()){
                 resultList.add(processResultSet(resultSet));
             }
