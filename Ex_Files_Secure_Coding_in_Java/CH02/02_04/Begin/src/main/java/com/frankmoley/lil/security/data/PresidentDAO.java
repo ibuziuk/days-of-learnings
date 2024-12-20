@@ -45,7 +45,7 @@ public class PresidentDAO {
         String lastName = resultSet.getString("LAST_NAME");
         String emailAddress = resultSet.getString("EMAIL_ADDRESS");
         President president =  new President(id, firstName, middleInitial, lastName, emailAddress);
-        LOGGER.info("Resolving president: {}", president);
+        LOGGER.debug("Resolving president: {}", president);
         return president;
     }
 
